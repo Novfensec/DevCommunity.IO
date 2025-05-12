@@ -8,10 +8,7 @@ To run the application in hot boot mode, execute the command in the console:
 set DEBUG=1 && python main.py
 """
 
-import importlib
-
-import registers
-import os
+import importlib, os, registers
 
 from kivy import Config
 
@@ -22,6 +19,7 @@ Config.set("graphics", "width", "317")
 # TODO: You may know an easier way to get the size of a computer display.
 from PIL import ImageGrab
 from kivy.core.window import Window
+from kivy.utils import get_color_from_hex
 
 resolution = ImageGrab.grab().size
 
@@ -78,7 +76,13 @@ class DevCommunity(MDApp):
 
     def apply_styles(self, style: str = "Light") -> None:
         self.theme_cls.theme_style = style
-        Window.clearcolor = self.theme_cls.backgroundColor
+        self.theme_cls.theme_style = style
+        if style == "Light":
+            Window.clearcolor = get_color_from_hex("#ffffff")
+            style = "Dark"
+        else:
+            Window.clearcolor = get_color_from_hex("#000000")
+            style = "Light"
 
     def referrer(self, destination: str = None) -> None:
         if self.manager_screens.current != destination:

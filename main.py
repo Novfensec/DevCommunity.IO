@@ -25,6 +25,7 @@ import os, ssl, webbrowser, registers # required before third party imports
 # ==========================
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.utils import get_color_from_hex
 
 from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
@@ -65,7 +66,7 @@ class DevCommunity(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.load_all_kv_files(os.path.join(self.directory, "View"))
-        self.theme_cls.primary_palette = "Midnightblue"
+        self.theme_cls.primary_palette = "Darkgrey"
         # This is the screen manager that will contain all the screens of your application.
         self.manager_screens = UI()
 
@@ -94,15 +95,18 @@ class DevCommunity(MDApp):
 
     def apply_styles(self, style: str = "Light") -> None:
         self.theme_cls.theme_style = style
-        Window.clearcolor = self.theme_cls.backgroundColor
         if style == "Light":
+            Window.clearcolor = status_color = nav_color = get_color_from_hex("#ffffff")
             style = "Dark"
-        self.set_bars_colors(style)
+        else:
+            Window.clearcolor = status_color = nav_color = get_color_from_hex("#000000")
+            style = "Light"
+        self.set_bars_colors(status_color, nav_color, style)
 
-    def set_bars_colors(self, style: str = "Light") -> None:
+    def set_bars_colors(self, status_color: list[float] = [1.0, 1.0, 1.0, 1.0], nav_color: list[float] = [1.0, 1.0, 1.0, 1.0], style: str = "Light") -> None:
         set_bars_colors(
-            self.theme_cls.primaryColor,  # status bar color
-            self.theme_cls.primaryColor,  # navigation bar color
+            status_color,  # status bar color
+            nav_color,  # navigation bar color
             style,  # icons color of status bar
         )
 
