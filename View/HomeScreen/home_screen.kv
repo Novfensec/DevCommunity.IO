@@ -1,1 +1,28 @@
 <HomeScreenView>:
+    StackLayout:
+        size_hint: 1, 1
+        padding: dp(16)
+        spacing: dp(8)
+
+        MDBoxLayout:
+            size_hint_x: 1
+            adaptive_height: True
+
+            FitImage:
+                size_hint: None, None
+                size: dp(56), dp(56)
+                source: "assets/images/devcommunity_logo.png"
+                radius: dp(16)
+
+            AnchorLayout:
+                anchor_x: "right"
+                anchor_y: "center"
+                pos_hint: {"right": 0}
+
+                MDGridLayout:
+                    rows: 1
+                    adaptive_size: True
+                    spacing: dp(8)
+
+                    DevIcon:
+                        icon: "cog"
